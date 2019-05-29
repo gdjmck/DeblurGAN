@@ -42,4 +42,9 @@ def __scale_width(img, target_width):
         return img
     w = target_width
     h = int(target_width * oh / ow)
-    return img.resize((w, h), Image.BICUBIC)
+    spare = h % 4
+    if spare >= 2:
+        h += (4-spare)
+    elif spare > 0:
+        h -= spare
+    return img.resize((w, h), Image.BILINEAR)
