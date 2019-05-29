@@ -67,6 +67,7 @@ class ConditionalGAN(BaseModel):
 		AtoB = self.opt.which_direction == 'AtoB'
 		inputA = input['A' if AtoB else 'B']
 		inputB = input['B' if AtoB else 'A']
+		print('inputA.size:', inputA.shape)
 		self.input_A.resize_(inputA.size()).copy_(inputA)
 		self.input_B.resize_(inputB.size()).copy_(inputB)
 		self.image_paths = input['A_paths' if AtoB else 'B_paths']

@@ -189,10 +189,12 @@ class ResnetGenerator(nn.Module):
         self.model = nn.Sequential(*model)
 
     def forward(self, input):
+        print('ResNet input:', input.shape)
         if self.gpu_ids and isinstance(input.data, torch.cuda.FloatTensor) and self.use_parallel:
             output = nn.parallel.data_parallel(self.model, input, self.gpu_ids)
         else:
             output = self.model(input)
+        print('ResNet output:', output.shape)
         if self.learn_residual:
             # output = input + output
             output = torch.clamp(input + output, min=-1, max=1)
